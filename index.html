@@ -1,0 +1,2834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Connect | One Campus, One Platform</title>
+<style>
+:root {
+  --ink: #18213d;
+  --muted: #68738f;
+  --line: #e8eaf4;
+  --glass: rgba(255, 255, 255, 0.85);
+  --purple: #6d5dfc;
+  --purple-dark: #5e52e8;
+  --purple-light: #efedff;
+  --blue: #3b82f6;
+  --blue-light: #eaf8ff;
+  --cyan: #22c7d6;
+  --pink: #ec72b7;
+  --bg: #f5f6ff;
+  --surface: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --success: #16856c;
+  --success-bg: #e7f8f1;
+  --warning: #b47a16;
+  --warning-bg: #fff4df;
+  --danger: #d93838;
+  --danger-bg: #ffebeb;
+  --info: #6559dc;
+  --info-bg: #eeeaff;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at 5% 0%, #e5e4ff 0, transparent 32%),
+              radial-gradient(circle at 100% 10%, #d9f7ff 0, transparent 28%),
+              var(--bg);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; border: 0; }
+.hidden { display: none !important; }
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d3d7ea; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #b0b7d3; }
+
+/* Login Page */
+.login-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.login-card {
+  width: min(1040px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: white;
+  border: 1px solid #ffffff;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 28px 90px #5962a526;
+}
+.login-art {
+  padding: 48px;
+  color: white;
+  background: linear-gradient(145deg, #635bfa, #438cf7 58%, #28c5cf);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 590px;
+}
+.orb {
+  position: absolute;
+  border: 1px solid #ffffff44;
+  border-radius: 50%;
+  width: 330px;
+  height: 330px;
+  right: -100px;
+  top: 100px;
+  box-shadow: 0 0 0 35px #ffffff0c, 0 0 0 75px #ffffff0a;
+}
+.login-art h1 {
+  font-size: 40px;
+  line-height: 1.1;
+  max-width: 400px;
+  margin: 35px 0 15px;
+  font-weight: 800;
+}
+.login-art p {
+  color: #edf1ff;
+  max-width: 380px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+.art-bottom {
+  font-size: 13px;
+  color: #e7eaff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.login-form {
+  padding: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+h2 { font-size: 28px; margin: 8px 0; font-weight: 800; }
+.muted { color: var(--muted); }
+.field {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0;
+  position: relative;
+}
+.field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 12px 14px;
+  background: #fbfbff;
+  outline: none;
+  color: var(--ink);
+  transition: all 0.2s ease;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: #9289ff;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px #7568ff18;
+}
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 36px;
+  background: none;
+  color: var(--muted);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 16px;
+}
+.role-chip-btn {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #f0efff;
+  color: #5e52e8;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+.role-chip-btn:hover, .role-chip-btn.active {
+  background: #5e52e8;
+  color: white;
+  box-shadow: 0 3px 8px #5e52e840;
+}
+
+.primary {
+  color: white;
+  background: linear-gradient(100deg, var(--purple), var(--blue), var(--cyan));
+  padding: 13px 20px;
+  border-radius: 13px;
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 9px 22px #635bfa30;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.primary:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px #635bfa45;
+}
+.primary:active { transform: translateY(0); }
+
+.demo-note {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 15px;
+  padding: 10px 12px;
+  background: #f6f8fd;
+  border-radius: 10px;
+  border-left: 3px solid var(--purple);
+}
+
+/* App Main Layout */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar-backdrop {
+  display: none;
+}
+.sidebar {
+  width: 256px;
+  padding: 24px 16px;
+  background: #ffffff;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 50;
+  transition: transform 0.25s ease;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 24px;
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--ink);
+}
+.brand-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #705bfa, #2fc5d2);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 18px;
+  box-shadow: 0 4px 12px #6d5dfc33;
+}
+.close-sidebar-btn {
+  display: none;
+  background: #f0efff;
+  color: var(--purple-dark);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.nav-label {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: #9aa1b6;
+  font-weight: 800;
+  padding: 8px 12px;
+}
+.nav {
+  display: grid;
+  gap: 4px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+.nav button {
+  background: transparent;
+  text-align: left;
+  padding: 11px 13px;
+  border-radius: 12px;
+  color: #68738f;
+  font-weight: 650;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.18s ease;
+}
+.nav button:hover {
+  background: linear-gradient(100deg, #efedff, #eaf8ff);
+  color: #5e52e8;
+  transform: translateX(2px);
+}
+.nav button.active {
+  background: linear-gradient(100deg, #efedff, #eaf8ff);
+  color: #5e52e8;
+  font-weight: 750;
+  box-shadow: 0 2px 8px #6d5dfc14;
+}
+.nav .ico {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.side-bottom {
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+  padding: 14px 6px 0;
+}
+.user-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  background: #fbfbff;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  margin-bottom: 10px;
+}
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #7163ff, #36c5d3);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.user-mini small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+.action {
+  background: #f0efff;
+  color: #6257e9;
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.action:hover {
+  background: #e4e1ff;
+  color: #4f42e4;
+  transform: translateY(-1px);
+}
+
+/* Main Area */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 28px 36px 50px;
+  max-width: 1560px;
+  margin: auto;
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.welcome h1 {
+  font-size: 25px;
+  margin: 0 0 4px;
+  font-weight: 800;
+}
+.welcome p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 6px 14px;
+  gap: 8px;
+  width: 240px;
+  box-shadow: 0 2px 6px #00000008;
+}
+.search-box input {
+  border: 0;
+  outline: none;
+  font-size: 12px;
+  width: 100%;
+  background: transparent;
+}
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: white;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px #00000008;
+}
+.icon-btn:hover {
+  background: #fbfbff;
+  border-color: #d1d5ea;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f36da9;
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  border: 2px solid white;
+}
+.role-pill {
+  border-radius: 30px;
+  padding: 9px 15px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  font-weight: 750;
+  color: #5e52e8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px #00000008;
+}
+
+/* Notification Popover */
+.notif-popover {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 320px;
+  background: white;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  box-shadow: 0 15px 40px #242e5a1f;
+  z-index: 100;
+  padding: 16px;
+}
+.notif-popover-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 10px;
+}
+.notif-popover-head b { font-size: 13px; }
+.notif-item {
+  padding: 10px 8px;
+  border-radius: 10px;
+  transition: background 0.15s ease;
+  font-size: 12px;
+  border-bottom: 1px solid #f6f7fc;
+  cursor: pointer;
+}
+.notif-item:hover { background: #fbfbff; }
+.notif-item:last-child { border: 0; }
+.notif-item b { display: block; font-size: 12px; color: var(--ink); margin-bottom: 2px; }
+.notif-item p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+.notif-item time { font-size: 10px; color: #a4adc5; margin-top: 4px; display: block; }
+
+/* Hero Banner */
+.hero {
+  border-radius: 24px;
+  padding: 28px 32px;
+  color: white;
+  background: linear-gradient(110deg, #6459f5, #4889f6 60%, #26bfcb);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 15px 35px #5d72f329;
+  margin-bottom: 22px;
+}
+.hero:after {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border: 1px solid #ffffff40;
+  border-radius: 50%;
+  right: 6%;
+  top: -120px;
+  box-shadow: 0 0 0 28px #ffffff0d, 0 0 0 60px #ffffff0a;
+}
+.hero h2 { font-size: 24px; margin: 0 0 8px; font-weight: 800; }
+.hero p {
+  margin: 0;
+  color: #edf1ff;
+  font-size: 13.5px;
+  max-width: 580px;
+  line-height: 1.5;
+}
+.hero .hero-tag {
+  background: #ffffff22;
+  border: 1px solid #ffffff55;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 11.5px;
+  font-weight: 800;
+  white-space: nowrap;
+  z-index: 1;
+  letter-spacing: 0.5px;
+}
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+.stat, .panel, .feature-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px #293d7310;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stat {
+  padding: 18px 20px;
+}
+.stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px #293d7318;
+}
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 650;
+}
+.stat strong {
+  display: block;
+  font-size: 28px;
+  margin: 10px 0 4px;
+  font-weight: 900;
+  color: var(--ink);
+}
+.stat small {
+  color: var(--success);
+  font-size: 11.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.stat .stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: #efedff;
+  color: #6d5dfc;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+/* Grids & Panels */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+.panel {
+  padding: 22px;
+  background: #ffffffd6;
+}
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.panel h3 {
+  font-size: 15px;
+  margin: 0;
+  font-weight: 800;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-head span, .panel-head button {
+  font-size: 11.5px;
+  color: var(--purple-dark);
+  font-weight: 700;
+  background: none;
+  cursor: pointer;
+}
+
+/* Notice Item */
+.notice {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.notice:last-child { border: 0; padding-bottom: 0; }
+.notice:first-child { padding-top: 0; }
+.notice-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #f0efff;
+  color: #635bfa;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.notice b { font-size: 13px; color: var(--ink); font-weight: 750; }
+.notice p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 4px 0 0;
+  line-height: 1.45;
+}
+.notice time {
+  font-size: 10.5px;
+  color: #9aa1b6;
+  display: block;
+  margin-top: 5px;
+}
+
+/* Event Item */
+.event {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+.event:last-child { border: 0; padding-bottom: 0; }
+.event:first-child { padding-top: 0; }
+.datebox {
+  background: #f0efff;
+  color: #665af0;
+  border-radius: 14px;
+  text-align: center;
+  padding: 8px 11px;
+  min-width: 52px;
+  box-shadow: 0 2px 6px #665af012;
+}
+.datebox b { display: block; font-size: 18px; font-weight: 900; line-height: 1.1; }
+.datebox small { font-size: 9px; font-weight: 800; letter-spacing: 0.8px; }
+.event-info { flex: 1; }
+.event b { font-size: 13px; color: var(--ink); font-weight: 750; }
+.event p { margin: 3px 0 0; color: var(--muted); font-size: 11.5px; }
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.filter-tab {
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.filter-tab:hover {
+  border-color: #b9b3ff;
+  color: var(--purple);
+}
+.filter-tab.active {
+  background: #635bfa;
+  color: white;
+  border-color: #635bfa;
+  box-shadow: 0 4px 12px #635bfa30;
+}
+
+/* Cards & Tables */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.feature-card {
+  padding: 20px;
+  background: #ffffffd6;
+}
+.feature-card .bigico {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: #f0efff;
+  color: #6257e9;
+  border-radius: 13px;
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+.feature-card h3 { font-size: 14.5px; margin: 0 0 6px; font-weight: 800; }
+.feature-card p { font-size: 12px; line-height: 1.5; color: var(--muted); margin: 0; }
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.data-table th {
+  text-align: left;
+  color: #8991a7;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  background: #fafbff;
+  font-weight: 800;
+}
+.data-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+.data-table tr:last-child td { border-bottom: 0; }
+.data-table tr:hover td { background: #fbfbff; }
+
+/* Status Badges */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 30px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  background: var(--success-bg);
+  color: var(--success);
+}
+.status.pending { background: var(--warning-bg); color: var(--warning); }
+.status.info { background: var(--info-bg); color: var(--info); }
+.status.danger { background: var(--danger-bg); color: var(--danger); }
+
+/* Progress bar */
+.progress-bar {
+  height: 8px;
+  background: #eef1f8;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--cyan));
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 25, 49, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 200;
+  padding: 20px;
+}
+.modal-card {
+  width: min(540px, 100%);
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 25px 60px #111a3b30;
+  border: 1px solid #ffffff;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.modal-head h3 { margin: 0; font-size: 18px; font-weight: 800; }
+.modal-close {
+  background: #f0efff;
+  color: #635bfa;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1e2947;
+  color: white;
+  padding: 13px 20px;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px #00000030;
+  z-index: 300;
+  font-size: 13px;
+  font-weight: 650;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.mobile-menu { display: none; }
+
+/* Responsive Queries */
+@media (max-width: 1100px) {
+  .sidebar { width: 220px; }
+  .main { padding: 22px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 780px) {
+  .login-card { grid-template-columns: 1fr; }
+  .login-art { min-height: 230px; padding: 28px; }
+  .login-art h1 { font-size: 30px; margin: 14px 0 8px; }
+  .login-form { padding: 28px; }
+  .app { display: block; }
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: #0d142955;
+    z-index: 45;
+  }
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 260px;
+    transform: translateX(-100%);
+    box-shadow: 15px 0 45px #17234a26;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .close-sidebar-btn { display: flex; }
+  .main { padding: 18px 14px 35px; }
+  .mobile-menu { display: inline-flex; }
+  .topbar { align-items: flex-start; }
+  .welcome h1 { font-size: 21px; }
+  .role-pill { display: none; }
+  .search-box { width: 100%; order: 3; margin-top: 8px; }
+  .hero { padding: 22px; flex-direction: column; align-items: flex-start; }
+  .stats { grid-template-columns: 1fr; gap: 12px; }
+  .stat strong { font-size: 24px; }
+  .grid2 { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: 1fr; }
+  .notif-popover { width: calc(100vw - 32px); right: -70px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="login" class="login-wrap">
+  <div class="login-card">
+    <section class="login-art">
+      <div class="orb"></div>
+      <div>
+        <div class="brand" style="padding:0;color:white">
+          <div class="brand-left">
+            <span class="logo" style="background:#ffffff25;box-shadow:none">✦</span>
+            <span>Campus Connect</span>
+          </div>
+        </div>
+        <h1>One campus.<br>One connected future.</h1>
+        <p>Your complete college life, organized in one beautiful place. Learn, collaborate, grow, and discover career opportunities.</p>
+      </div>
+      <div class="art-bottom">
+        <span>✦ Smart campus experience · High fidelity prototype</span>
+      </div>
+    </section>
+
+    <section class="login-form">
+      <div class="eyebrow">Welcome to your campus</div>
+      <h2>Sign in to continue</h2>
+      <p class="muted" style="font-size:13px;margin:0 0 12px">Select a role below or enter your credentials to explore role-tailored dashboards.</p>
+
+      <div style="margin-bottom:6px">
+        <label style="font-size:11.5px;font-weight:700;color:var(--muted)">QUICK SELECT ROLE DEMO:</label>
+        <div class="quick-roles">
+          <button type="button" class="role-chip-btn active" onclick="setDemoRole('Student')">Student</button>
+          <button type="button" class="role-chip-btn" onclick="setDemoRole('Teacher / Faculty')">Faculty</button>
+          <button type="button" class="role-chip-btn" onclick="setDemoRole('College Administration')">Admin</button>
+          <button type="button" class="role-chip-btn" onclick="setDemoRole('Placement Cell')">Placement</button>
+          <button type="button" class="role-chip-btn" onclick="setDemoRole('Parent')">Parent</button>
+        </div>
+      </div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label>College email / ID</label>
+          <input id="email" value="student@campus.edu" required placeholder="Enter college email ID">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input id="password" type="password" value="demo123" required placeholder="Enter password">
+          <button type="button" class="password-toggle" onclick="togglePassword()" title="Show/Hide password">👁</button>
+        </div>
+        <div class="field">
+          <label>Sign in as</label>
+          <select id="role" onchange="onRoleSelectChange()">
+            <option>Student</option>
+            <option>Teacher / Faculty</option>
+            <option>College Administration</option>
+            <option>Placement Cell</option>
+            <option>Parent</option>
+          </select>
+        </div>
+        <button class="primary" style="width:100%;margin-top:10px" type="submit">
+          <span>Sign in to Campus Connect</span>
+          <span>→</span>
+        </button>
+      </form>
+
+      <div class="demo-note">
+        <b>Demo Access:</b> Any email &amp; password will authenticate. Instant role-based switching is enabled. No personal data is stored on external servers.
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Main Application Shell -->
+<div id="app" class="app hidden">
+  <div id="sidebarBackdrop" class="sidebar-backdrop hidden" onclick="toggleMenu()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-left">
+        <span class="logo">✦</span>
+        <span>Campus Connect</span>
+      </div>
+      <button class="close-sidebar-btn" onclick="toggleMenu()" title="Close menu">✕</button>
+    </div>
+
+    <div class="nav-label">WORKSPACE</div>
+    <nav class="nav" id="nav"></nav>
+
+    <div class="side-bottom">
+      <div class="user-mini">
+        <div class="avatar" id="avatar">S</div>
+        <div style="min-width:0">
+          <b id="userName" style="font-size:12.5px;display:block">Student</b>
+          <small id="userEmail">student@campus.edu</small>
+        </div>
+      </div>
+      <button class="action" style="width:100%" onclick="logout()">
+        <span>Sign out</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;gap:12px;align-items:center">
+        <button class="icon-btn mobile-menu" onclick="toggleMenu()" aria-label="Open menu">☰</button>
+        <div class="welcome">
+          <h1 id="pageTitle">Good morning 👋</h1>
+          <p id="pageSub">Here’s what’s happening on your campus today.</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="search-box">
+          <span style="color:var(--muted)">🔍</span>
+          <input id="globalSearch" placeholder="Search notices, courses, events..." oninput="handleGlobalSearch(this.value)">
+        </div>
+
+        <button class="icon-btn" onclick="toggleNotifPopover()" title="Notifications" aria-label="Notifications">
+          <span>🔔</span>
+          <i id="notifDot" class="dot"></i>
+        </button>
+
+        <span class="role-pill" id="rolePill">Student workspace</span>
+
+        <!-- Notifications Popover -->
+        <div id="notifPopover" class="notif-popover hidden">
+          <div class="notif-popover-head">
+            <b>Campus Notifications (<span id="notifCount">3</span>)</b>
+            <button onclick="markAllNotificationsRead()" style="background:none;color:#5e52e8;font-size:11px;font-weight:700">Mark all read</button>
+          </div>
+          <div id="notifList"></div>
+        </div>
+      </div>
+    </header>
+
+    <div id="view"></div>
+  </main>
+</div>
+
+<!-- Global Modal Container -->
+<div id="modalOverlay" class="modal-overlay hidden" onclick="closeModalOnOverlay(event)">
+  <div class="modal-card" id="modalCard"></div>
+</div>
+
+<!-- Toast Feedback -->
+<div id="toast" class="toast hidden"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+/* App State */
+const state = {
+  currentRole: 'Student',
+  currentEmail: 'student@campus.edu',
+  currentPage: 'Overview',
+  searchQuery: '',
+  unreadNotifs: 3,
+  notifications: [
+    { id: 1, title: 'Mid-term schedule published', desc: 'Check timetables for the finalized exam schedule.', time: '10 min ago', unread: true },
+    { id: 2, title: 'Campus Hackathon 2026', desc: 'Registration closes tonight at 11:59 PM.', time: '1 hour ago', unread: true },
+    { id: 3, title: 'Fee payment receipt ready', desc: 'Semester 4 receipt is available to download.', time: 'Yesterday', unread: true }
+  ],
+  notices: [
+    { id: 1, tag: 'Examinations', icon: '📢', title: 'Mid-semester examination schedule published', desc: 'The comprehensive timetable for all 4th & 6th semester courses is now officially released. Students are advised to verify their exam slots.', date: 'Today · 10:30 AM', author: 'Dean Academics' },
+    { id: 2, tag: 'Academics', icon: '📚', title: 'Assignment submission reminder', desc: 'DSA and DBMS assignment submissions are due before Friday, 11:59 PM via the course portal. No late extensions will be granted.', date: 'Yesterday · 4:15 PM', author: 'Prof. Sharma' },
+    { id: 3, tag: 'Placements', icon: '🎓', title: 'Career & Placement guidance session', desc: 'Registration for the technical mock interviews and resume workshop by alumni working at top tech firms is now open.', date: 'Yesterday · 11:00 AM', author: 'Placement Cell' },
+    { id: 4, tag: 'Campus Life', icon: '🏆', title: 'Annual Sports Meet registrations open', desc: 'Football, Basketball, Badminton, and Athletics tryouts start this weekend at the campus sports complex.', date: '2 days ago', author: 'Sports Committee' }
+  ],
+  events: [
+    { id: 1, day: '18', month: 'NOV', title: 'TechFest 2026: Innovations in AI', loc: 'Main Auditorium · 10:00 AM', category: 'Tech', registered: false },
+    { id: 2, day: '21', month: 'NOV', title: 'Career & Internship Expo', loc: 'Seminar Hall B · 11:30 AM', category: 'Placements', registered: true },
+    { id: 3, day: '26', month: 'NOV', title: 'Inter-College Sports Meet', loc: 'College Ground · 09:00 AM', category: 'Sports', registered: false },
+    { id: 4, day: '29', month: 'NOV', title: 'Annual Cultural Evening', loc: 'Open Air Amphitheatre · 05:30 PM', category: 'Cultural', registered: false }
+  ],
+  communityPosts: [
+    { id: 1, author: 'Aryan Sharma', role: 'Student · CSE', time: '15 min ago', content: 'Does anyone have previous year question papers for DBMS CT-2? Would really appreciate it!', tag: '#Academics', likes: 6, hasLiked: false, replies: 3 },
+    { id: 2, author: 'TechFest Volunteers', role: 'Club Lead', time: '2 hours ago', content: 'Volunteer registrations are officially open for logistics and web design teams! Great perks and certificates.', tag: '#CampusLife', likes: 14, hasLiked: true, replies: 5 },
+    { id: 3, author: 'Prof. R. Mehta', role: 'Faculty · IT', time: '5 hours ago', content: 'Reminder: Operating Systems lab batch 2 submission demo is scheduled for tomorrow at 2:00 PM in Lab 4.', tag: '#Notice', likes: 9, hasLiked: false, replies: 1 }
+  ],
+  complaints: [
+    { id: 'CC-2026-1042', category: 'Infrastructure', priority: 'High', subject: 'Projector flickering in Room 304', desc: 'During lectures, the projector turns off every 10 minutes.', status: 'In Progress', date: '01 Nov 2026' },
+    { id: 'CC-2026-0982', category: 'IT Support', priority: 'Normal', subject: 'Wi-Fi connectivity drop near library', desc: 'Campus 5G hotspot asks for authentication repeatedly.', status: 'Resolved', date: '28 Oct 2026' }
+  ],
+  placementOpportunities: [
+    { id: 1, role: 'Frontend Developer Intern', company: 'Nexus Technologies', skills: ['React', 'JavaScript', 'CSS', 'HTML'], match: 96, stipend: '₹25,000 / month', applied: false },
+    { id: 2, role: 'Python Backend Engineer Intern', company: 'DataSphere AI', skills: ['Python', 'SQL', 'Django', 'FastAPI'], match: 91, stipend: '₹30,000 / month', applied: false },
+    { id: 3, role: 'Data Analyst Intern', company: 'QuantMetrics', skills: ['Python', 'Excel', 'PowerBI', 'SQL'], match: 87, stipend: '₹22,000 / month', applied: false },
+    { id: 4, role: 'UI/UX Design Intern', company: 'CreativePulse Studio', skills: ['Figma', 'UI/UX', 'Wireframing', 'CSS'], match: 82, stipend: '₹20,000 / month', applied: false }
+  ],
+  assignments: [
+    { id: 1, subject: 'Data Structures', title: 'Binary Search Tree & Balanced AVL Practice', due: '18 Nov 2026', status: 'Pending', marks: '30 marks' },
+    { id: 2, subject: 'DBMS', title: 'Complex Joins and Normalization Queries', due: '20 Nov 2026', status: 'Submitted', marks: '25 marks' },
+    { id: 3, subject: 'Web Technology', title: 'Responsive Dashboard Prototype with Glassmorphism', due: '22 Nov 2026', status: 'In Progress', marks: '40 marks' },
+    { id: 4, subject: 'Operating Systems', title: 'Round Robin CPU Scheduling Simulation', due: '25 Nov 2026', status: 'Pending', marks: '30 marks' }
+  ],
+  timetableActiveDay: 'Monday',
+  noticesFilter: 'All',
+  eventsFilter: 'All',
+  assignmentsFilter: 'All'
+};
+
+const navByRole = {
+  'Student': [
+    ['Overview', '⌂'],
+    ['Notices', '◉'],
+    ['Timetable', '▦'],
+    ['Attendance', '◷'],
+    ['Assignments & Results', '▤'],
+    ['Events', '✦'],
+    ['Placements', '↗'],
+    ['Community', '☏'],
+    ['Fees', '₹'],
+    ['Complaints', '☷']
+  ],
+  'Teacher / Faculty': [
+    ['Overview', '⌂'],
+    ['Notices', '◉'],
+    ['Timetable', '▦'],
+    ['Attendance', '◷'],
+    ['Assignments & Results', '▤'],
+    ['Community', '☏'],
+    ['Complaints', '☷']
+  ],
+  'College Administration': [
+    ['Overview', '⌂'],
+    ['Notices', '◉'],
+    ['Events', '✦'],
+    ['Fees', '₹'],
+    ['Complaints', '☷'],
+    ['Community', '☏']
+  ],
+  'Placement Cell': [
+    ['Overview', '⌂'],
+    ['Placements', '↗'],
+    ['Notices', '◉'],
+    ['Events', '✦'],
+    ['Community', '☏']
+  ],
+  'Parent': [
+    ['Overview', '⌂'],
+    ['Attendance', '◷'],
+    ['Assignments & Results', '▤'],
+    ['Notices', '◉'],
+    ['Fees', '₹'],
+    ['Complaints', '☷']
+  ]
+};
+
+const roleDetails = {
+  'Student': { name: 'Aryan Sharma', email: 'student@campus.edu', avatar: 'A', title: 'B.Tech CSE · Sem 4' },
+  'Teacher / Faculty': { name: 'Dr. Vivek Verma', email: 'faculty@campus.edu', avatar: 'V', title: 'Associate Professor · CSE' },
+  'College Administration': { name: 'Dean Office Admin', email: 'admin@campus.edu', avatar: 'D', title: 'Registrar & Academic Affairs' },
+  'Placement Cell': { name: 'Pooja Nair', email: 'placement@campus.edu', avatar: 'P', title: 'Head Placement Officer' },
+  'Parent': { name: 'Rajesh Sharma', email: 'parent@campus.edu', avatar: 'R', title: "Parent of Aryan Sharma (24CS082)" }
+};
+
+/* Time-based dynamic greeting */
+function getGreeting() {
+  const hr = new Date().getHours();
+  if (hr >= 4 && hr < 12) return 'Good morning 👋';
+  if (hr >= 12 && hr < 17) return 'Good afternoon ☀️';
+  if (hr >= 17 && hr < 21) return 'Good evening 🌆';
+  return 'Welcome back 🌙';
+}
+
+/* Toast Message */
+function showToast(msg) {
+  const t = $('toast');
+  t.innerHTML = `<span>✓</span><span>${msg}</span>`;
+  t.classList.remove('hidden');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.add('hidden'), 2800);
+}
+
+/* Modal Helper */
+function openModal(contentHtml) {
+  $('modalCard').innerHTML = contentHtml;
+  $('modalOverlay').classList.remove('hidden');
+}
+function closeModal() {
+  $('modalOverlay').classList.add('hidden');
+}
+function closeModalOnOverlay(e) {
+  if (e.target === $('modalOverlay')) closeModal();
+}
+
+/* Mobile Sidebar */
+function toggleMenu() {
+  $('sidebar').classList.toggle('open');
+  $('sidebarBackdrop').classList.toggle('hidden');
+}
+
+/* Password Visibility */
+function togglePassword() {
+  const p = $('password');
+  p.type = p.type === 'password' ? 'text' : 'password';
+}
+
+/* Quick Demo Role Picker on Login */
+function setDemoRole(role) {
+  document.querySelectorAll('.role-chip-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.includes(role.split(' ')[0]));
+  });
+  $('role').value = role;
+  $('email').value = roleDetails[role].email;
+}
+
+function onRoleSelectChange() {
+  const r = $('role').value;
+  $('email').value = roleDetails[r].email;
+  document.querySelectorAll('.role-chip-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.includes(r.split(' ')[0]));
+  });
+}
+
+/* Notifications Popover */
+function toggleNotifPopover() {
+  const p = $('notifPopover');
+  p.classList.toggle('hidden');
+  renderNotifications();
+}
+
+function renderNotifications() {
+  $('notifCount').textContent = state.unreadNotifs;
+  $('notifDot').style.display = state.unreadNotifs > 0 ? 'block' : 'none';
+  $('notifList').innerHTML = state.notifications.map(n => `
+    <div class="notif-item" onclick="openNotifDetail(${n.id})">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <b>${n.title}</b>
+        ${n.unread ? '<span style="width:6px;height:6px;border-radius:50%;background:#f36da9"></span>' : ''}
+      </div>
+      <p>${n.desc}</p>
+      <time>${n.time}</time>
+    </div>
+  `).join('');
+}
+
+function markAllNotificationsRead() {
+  state.notifications.forEach(n => n.unread = false);
+  state.unreadNotifs = 0;
+  renderNotifications();
+  showToast('All notifications marked as read.');
+}
+
+function openNotifDetail(id) {
+  const n = state.notifications.find(x => x.id === id);
+  if (!n) return;
+  n.unread = false;
+  state.unreadNotifs = state.notifications.filter(x => x.unread).length;
+  renderNotifications();
+  openModal(`
+    <div class="modal-head">
+      <h3>${n.title}</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted);line-height:1.6">${n.desc}</p>
+    <div style="font-size:12px;color:#8f98af;margin-top:16px">Received: ${n.time}</div>
+    <div style="margin-top:20px;text-align:right">
+      <button class="action" onclick="closeModal()">Close</button>
+    </div>
+  `);
+}
+
+/* Global Search */
+function handleGlobalSearch(query) {
+  state.searchQuery = query.toLowerCase().trim();
+  if (state.currentPage === 'Notices' || state.currentPage === 'Events' || state.currentPage === 'Placements' || state.currentPage === 'Community') {
+    render(state.currentPage);
+  }
+}
+
+/* Authentication */
+$('loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  state.currentRole = $('role').value;
+  state.currentEmail = $('email').value;
+
+  const info = roleDetails[state.currentRole] || { name: state.currentRole, email: state.currentEmail, avatar: state.currentRole[0] };
+  $('userName').textContent = info.name;
+  $('userEmail').textContent = state.currentEmail;
+  $('avatar').textContent = info.avatar;
+  $('rolePill').textContent = state.currentRole + ' workspace';
+
+  $('login').classList.add('hidden');
+  $('app').classList.remove('hidden');
+
+  render('Overview');
+  showToast(`Signed in as ${info.name}`);
+});
+
+function logout() {
+  $('app').classList.add('hidden');
+  $('login').classList.remove('hidden');
+  if ($('sidebar').classList.contains('open')) toggleMenu();
+  showToast('You have signed out successfully.');
+}
+
+/* Navigation Builder */
+function buildNav() {
+  const list = navByRole[state.currentRole] || navByRole['Student'];
+  $('nav').innerHTML = list.map(([name, icon]) => `
+    <button class="${name === state.currentPage ? 'active' : ''}" onclick="render('${name}')">
+      <span class="ico">${icon}</span>
+      <span>${name}</span>
+    </button>
+  `).join('');
+}
+
+function setHead(title, sub) {
+  $('pageTitle').textContent = title;
+  $('pageSub').textContent = sub;
+}
+
+/* Common UI Component Generators */
+function hero(title, desc, tag = 'CAMPUS CONNECT') {
+  return `
+    <section class="hero">
+      <div>
+        <h2>${title}</h2>
+        <p>${desc}</p>
+      </div>
+      <span class="hero-tag">✦ ${tag}</span>
+    </section>
+  `;
+}
+
+function stat(label, val, icon, foot, isPositive = true) {
+  return `
+    <div class="stat">
+      <div class="stat-top">
+        <span>${label}</span>
+        <span class="stat-icon">${icon}</span>
+      </div>
+      <strong>${val}</strong>
+      <small style="color:${isPositive ? 'var(--success)' : 'var(--warning)'}">
+        <span>${isPositive ? '↑' : '•'}</span> ${foot}
+      </small>
+    </div>
+  `;
+}
+
+function panel(title, body, tag = 'View all', tagAction = '') {
+  const tagBtn = tagAction 
+    ? `<button onclick="${tagAction}">${tag}</button>` 
+    : `<span>${tag}</span>`;
+  return `
+    <section class="panel">
+      <div class="panel-head">
+        <h3>${title}</h3>
+        ${tagBtn}
+      </div>
+      ${body}
+    </section>
+  `;
+}
+
+function noticeList(limit = 3) {
+  let list = state.notices;
+  if (state.searchQuery) {
+    list = list.filter(n => n.title.toLowerCase().includes(state.searchQuery) || n.desc.toLowerCase().includes(state.searchQuery));
+  }
+  if (state.noticesFilter !== 'All') {
+    list = list.filter(n => n.tag === state.noticesFilter);
+  }
+  const items = list.slice(0, limit);
+  if (!items.length) return `<div class="empty">No matching announcements found.</div>`;
+
+  return items.map(n => `
+    <div class="notice">
+      <div class="notice-icon">${n.icon}</div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <b>${n.title}</b>
+          <span class="status info" style="font-size:10px">${n.tag}</span>
+        </div>
+        <p>${n.desc}</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+          <time>${n.date} · ${n.author}</time>
+          <button class="action" style="padding:4px 8px;font-size:11px" onclick="viewNoticeDetail(${n.id})">Read full</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function viewNoticeDetail(id) {
+  const n = state.notices.find(x => x.id === id);
+  if (!n) return;
+  openModal(`
+    <div class="modal-head">
+      <div>
+        <span class="status info" style="margin-bottom:6px">${n.tag}</span>
+        <h3>${n.title}</h3>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:14px">${n.desc}</p>
+    <div style="background:#f8f9fe;border-radius:12px;padding:12px;margin:18px 0;font-size:12px;color:var(--muted)">
+      <div><b>Issued by:</b> ${n.author}</div>
+      <div style="margin-top:4px"><b>Timestamp:</b> ${n.date}</div>
+      <div style="margin-top:4px"><b>Verification:</b> Digitally signed official campus circular</div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button class="action" onclick="showToast('Circular downloaded as PDF');closeModal()">Download circular PDF</button>
+      <button class="primary" onclick="closeModal()">Close</button>
+    </div>
+  `);
+}
+
+function eventList(limit = 4) {
+  let list = state.events;
+  if (state.searchQuery) {
+    list = list.filter(e => e.title.toLowerCase().includes(state.searchQuery) || e.loc.toLowerCase().includes(state.searchQuery));
+  }
+  if (state.eventsFilter !== 'All') {
+    list = list.filter(e => e.category === state.eventsFilter);
+  }
+  const items = list.slice(0, limit);
+  if (!items.length) return `<div class="empty">No events found in this category.</div>`;
+
+  return items.map(e => `
+    <div class="event">
+      <div class="datebox">
+        <b>${e.day}</b>
+        <small>${e.month}</small>
+      </div>
+      <div class="event-info">
+        <div style="display:flex;align-items:center;gap:6px">
+          <b>${e.title}</b>
+          <span class="status ${e.registered ? '' : 'info'}" style="font-size:9.5px;padding:2px 7px">
+            ${e.registered ? 'Registered ✓' : e.category}
+          </span>
+        </div>
+        <p>${e.loc}</p>
+      </div>
+      <button class="${e.registered ? 'action' : 'primary'}" style="padding:7px 12px;font-size:11px" onclick="toggleEventRegistration(${e.id})">
+        ${e.registered ? 'Cancel RSVP' : 'Register'}
+      </button>
+    </div>
+  `).join('');
+}
+
+function toggleEventRegistration(id) {
+  const ev = state.events.find(x => x.id === id);
+  if (!ev) return;
+  ev.registered = !ev.registered;
+  showToast(ev.registered ? `Registered for ${ev.title}!` : `Cancelled RSVP for ${ev.title}.`);
+  render(state.currentPage);
+}
+
+/* Role-Aware Quick Actions */
+function quickActions() {
+  const actionsByRole = {
+    'Student': [
+      ['◉', 'Notices', 'Official updates', 'Notices'],
+      ['▦', 'Timetable', 'Today’s classes', 'Timetable'],
+      ['◷', 'Attendance', 'Subject attendance', 'Attendance'],
+      ['▤', 'Assignments', 'Course submissions', 'Assignments & Results'],
+      ['↗', 'Placements', 'Job recommendations', 'Placements'],
+      ['₹', 'Fees', 'Payment status', 'Fees']
+    ],
+    'Teacher / Faculty': [
+      ['▦', 'My Schedule', 'Class teaching timetable', 'Timetable'],
+      ['◷', 'Mark Attendance', 'Record class presence', 'Attendance'],
+      ['▤', 'Grade Submissions', 'Review assignments', 'Assignments & Results'],
+      ['◉', 'Post Circular', 'Publish announcement', 'Notices'],
+      ['☏', 'Discussions', 'Answer student questions', 'Community'],
+      ['☷', 'Support Helpdesk', 'Staff requests', 'Complaints']
+    ],
+    'College Administration': [
+      ['◉', 'Publish Notice', 'Broadcast campus alert', 'Notices'],
+      ['₹', 'Fee Analytics', 'Campus collections', 'Fees'],
+      ['☷', 'Resolve Grievance', 'Campus help tickets', 'Complaints'],
+      ['✦', 'Event Manager', 'Schedule college event', 'Events'],
+      ['☏', 'Campus Forum', 'Community moderation', 'Community'],
+      ['⌂', 'Campus Overview', 'Department metrics', 'Overview']
+    ],
+    'Placement Cell': [
+      ['↗', 'Post Drive', 'Create company drive', 'Placements'],
+      ['✦', 'AI Candidate Match', 'Review student skills', 'Placements'],
+      ['◉', 'Placement Notice', 'Circular for students', 'Notices'],
+      ['✦', 'Interview Events', 'Mock sessions', 'Events'],
+      ['☏', 'Alumni Network', 'Career discussions', 'Community']
+    ],
+    'Parent': [
+      ['◷', 'Ward Attendance', 'Aryan’s attendance log', 'Attendance'],
+      ['▤', 'Results & Progress', 'Semester CGPA report', 'Assignments & Results'],
+      ['₹', 'Pay College Fee', 'Online fee portal', 'Fees'],
+      ['◉', 'College Notices', 'Official announcements', 'Notices'],
+      ['☷', 'Contact College', 'Parent grievance form', 'Complaints']
+    ]
+  };
+
+  const list = actionsByRole[state.currentRole] || actionsByRole['Student'];
+  return `
+    <div class="cards" style="grid-template-columns:repeat(3, 1fr);gap:12px">
+      ${list.map(i => `
+        <div style="background:#fbfbff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;transition:all 0.2s ease" onclick="render('${i[3]}')" onmouseover="this.style.borderColor='#9e94ff'" onmouseout="this.style.borderColor='var(--line)'">
+          <div style="font-size:18px;margin-bottom:6px">${i[0]}</div>
+          <b style="font-size:12.5px;display:block;color:var(--ink)">${i[1]}</b>
+          <span style="font-size:11px;color:var(--muted)">${i[2]}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+/* Page: Overview Dashboard */
+function overview() {
+  const statsByRole = {
+    'Student': [
+      ['Attendance Rate', '92.4%', '◷', '+1.2% this month', true],
+      ['Pending Tasks', '02', '▤', '2 due this week', false],
+      ['Upcoming Events', '03', '✦', 'Next: TechFest', true],
+      ['AI Job Matches', '08', '↗', '96% top match score', true]
+    ],
+    'Teacher / Faculty': [
+      ['Assigned Batches', '06', '▦', 'Across 3 sections', true],
+      ['Attendance Due', '02', '◷', 'Needs submission today', false],
+      ['Submissions', '42', '▤', 'Submitted this week', true],
+      ['Student Queries', '05', '☏', 'Awaiting reply', false]
+    ],
+    'College Administration': [
+      ['Enrolled Students', '1,248', '♙', 'Active this semester', true],
+      ['Faculty Strength', '86', '♧', 'Full-time staff', true],
+      ['Open Grievances', '04', '☷', 'Needs administrative review', false],
+      ['Fee Collection', '91.8%', '₹', '₹4.82 Cr collected', true]
+    ],
+    'Placement Cell': [
+      ['Active Drives', '24', '↗', 'Top tech & core companies', true],
+      ['Eligible Candidates', '680', '♙', 'Registered students', true],
+      ['Upcoming Interviews', '05', '▦', 'This week', true],
+      ['Avg. CTC Offered', '₹8.4 LPA', '✦', '+14% year-over-year', true]
+    ],
+    'Parent': [
+      ['Ward Attendance', '92.4%', '◷', 'Above 75% minimum target', true],
+      ['Pending Work', '02', '▤', 'Aryan Sharma · Sem 4', true],
+      ['Latest Semester GPA', '8.6 CGPA', '▤', 'Rank 4 in department', true],
+      ['Semester Fee', 'Clear', '₹', 'All dues paid for Term 4', true]
+    ]
+  };
+
+  const st = (statsByRole[state.currentRole] || statsByRole['Student']).map(x => stat(...x)).join('');
+  const info = roleDetails[state.currentRole] || { name: state.currentRole };
+
+  let heroDesc = `Welcome back, ${info.name}. Stay updated with academics, campus activities, and role-tailored insights.`;
+  let heroTitle = `${getGreeting().replace(' 👋','').replace(' ☀️','').replace(' 🌆','').replace(' 🌙','')}, ${info.name.split(' ')[0]}!`;
+
+  return `
+    ${hero(heroTitle, heroDesc, state.currentRole.toUpperCase())}
+    <div class="stats">${st}</div>
+
+    <div class="grid2">
+      ${panel('Latest Announcements', noticeList(3), 'View all announcements', "render('Notices')")}
+      ${panel('Upcoming Campus Events', eventList(3), 'Explore schedule', "render('Events')")}
+    </div>
+
+    <div class="grid2" style="margin-top:18px">
+      ${panel('Quick Workspace Actions', quickActions(), 'Open navigation')}
+      ${panel('AI Campus Assistant', `
+        <div class="notice" style="border:0;padding:0">
+          <div class="notice-icon" style="background:linear-gradient(135deg,#efedff,#eaf8ff);color:#635bfa">✦</div>
+          <div>
+            <b>Intelligent Campus Recommendations</b>
+            <p style="margin:5px 0 12px">
+              ${state.currentRole === 'Placement Cell' 
+                ? 'AI has matched 14 new candidates for the upcoming Nexus Frontend Developer drive based on Github & coursework data.' 
+                : state.currentRole === 'Parent'
+                ? 'Aryan’s attendance is consistently high at 92.4%. Upcoming mid-term exams start next week.'
+                : state.currentRole === 'Teacher / Faculty'
+                ? 'AI flagged 3 students needing attendance watch in Data Structures Section A.'
+                : 'Based on your skills in React and Python, 3 high-affinity internships are actively hiring this week.'}
+            </p>
+            <div style="display:flex;gap:10px">
+              <button class="primary" style="padding:8px 14px;font-size:12px" onclick="render('${state.currentRole === 'Parent' ? 'Attendance' : state.currentRole === 'Teacher / Faculty' ? 'Attendance' : 'Placements'}')">
+                View smart insights
+              </button>
+              <button class="action" onclick="showToast('AI analysis refreshed!')">Refresh analysis</button>
+            </div>
+          </div>
+        </div>
+      `, 'AI v2.4')}
+    </div>
+  `;
+}
+
+/* Page: Notices */
+function pageNotices() {
+  const tags = ['All', 'Academics', 'Examinations', 'Placements', 'Campus Life'];
+  const canPublish = state.currentRole === 'College Administration' || state.currentRole === 'Teacher / Faculty';
+
+  return `
+    ${hero('Campus Circulars & Announcements', 'Official updates from university administration, examination cell, and academic departments.')}
+    
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+      <div class="filter-tabs" style="margin:0">
+        ${tags.map(t => `
+          <button class="filter-tab ${state.noticesFilter === t ? 'active' : ''}" onclick="setNoticeFilter('${t}')">${t}</button>
+        `).join('')}
+      </div>
+      ${canPublish ? `<button class="primary" style="padding:8px 16px;font-size:12.5px" onclick="openPublishNoticeModal()">+ Publish circular</button>` : ''}
+    </div>
+
+    ${panel(`Official Announcements (${state.notices.length})`, noticeList(10), 'Showing verified circulars')}
+  `;
+}
+
+function setNoticeFilter(tag) {
+  state.noticesFilter = tag;
+  render('Notices');
+}
+
+function openPublishNoticeModal() {
+  openModal(`
+    <div class="modal-head">
+      <h3>Broadcast Official Circular</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <form onsubmit="submitNotice(event)">
+      <div class="field">
+        <label>Circular Title</label>
+        <input id="newNoticeTitle" required placeholder="e.g. Schedule for Annual Practical Exams">
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select id="newNoticeCategory">
+          <option>Academics</option>
+          <option>Examinations</option>
+          <option>Placements</option>
+          <option>Campus Life</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Details & Circular Text</label>
+        <textarea id="newNoticeDesc" rows="4" required placeholder="Write the circular notification..."></textarea>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+        <button type="button" class="action" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="primary">Publish notice</button>
+      </div>
+    </form>
+  `);
+}
+
+function submitNotice(e) {
+  e.preventDefault();
+  const title = $('newNoticeTitle').value.trim();
+  const tag = $('newNoticeCategory').value;
+  const desc = $('newNoticeDesc').value.trim();
+  if (!title || !desc) return;
+
+  const newNotice = {
+    id: Date.now(),
+    tag,
+    icon: tag === 'Examinations' ? '📢' : tag === 'Placements' ? '🎓' : '📚',
+    title,
+    desc,
+    date: 'Just now · Published',
+    author: roleDetails[state.currentRole]?.name || state.currentRole
+  };
+
+  state.notices.unshift(newNotice);
+  closeModal();
+  showToast('Official circular published to campus!');
+  render('Notices');
+}
+
+/* Page: Timetable */
+function pageTimetable() {
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const isFaculty = state.currentRole === 'Teacher / Faculty';
+
+  const studentSchedule = {
+    'Monday': [
+      ['09:00 - 10:00', 'Data Structures & Algorithms', 'Room 302', 'Dr. Vivek Verma', 'Lecture'],
+      ['10:00 - 11:00', 'Discrete Mathematics', 'Room 204', 'Prof. Anita Sen', 'Lecture'],
+      ['11:15 - 12:15', 'Database Management Systems', 'Room 302', 'Dr. R. Mehta', 'Lecture'],
+      ['01:00 - 03:00', 'Web Technology Lab', 'Software Lab 3', 'Prof. K. Nair', 'Practical Lab']
+    ],
+    'Tuesday': [
+      ['09:00 - 10:00', 'Operating Systems', 'Room 302', 'Dr. S. Kulkarni', 'Lecture'],
+      ['10:00 - 12:00', 'DBMS Practical Lab', 'Lab 2', 'Dr. R. Mehta', 'Practical Lab'],
+      ['01:00 - 02:00', 'Technical Communication', 'Seminar Hall B', 'Dr. N. Roy', 'Workshop'],
+      ['02:00 - 03:00', 'Mentor Mentee Session', 'Faculty Room 4', 'Dr. Vivek Verma', 'Guidance']
+    ],
+    'Wednesday': [
+      ['09:00 - 10:00', 'Discrete Mathematics', 'Room 204', 'Prof. Anita Sen', 'Lecture'],
+      ['10:00 - 11:00', 'Data Structures & Algorithms', 'Room 302', 'Dr. Vivek Verma', 'Lecture'],
+      ['11:15 - 12:15', 'Web Technology', 'Room 302', 'Prof. K. Nair', 'Lecture'],
+      ['01:00 - 02:30', 'Library & Research Hour', 'Central Library', 'Self-study', 'Independent']
+    ],
+    'Thursday': [
+      ['09:00 - 10:00', 'Web Technology', 'Room 302', 'Prof. K. Nair', 'Lecture'],
+      ['10:00 - 11:00', 'Operating Systems', 'Room 302', 'Dr. S. Kulkarni', 'Lecture'],
+      ['11:15 - 12:15', 'Discrete Mathematics', 'Room 204', 'Prof. Anita Sen', 'Tutorial'],
+      ['01:00 - 03:00', 'Mini Project Lab', 'Incubation Lab', 'Faculty Panel', 'Practical Lab']
+    ],
+    'Friday': [
+      ['09:00 - 10:00', 'Database Management Systems', 'Room 302', 'Dr. R. Mehta', 'Lecture'],
+      ['10:00 - 11:00', 'Data Structures Problem Solving', 'Room 302', 'Dr. Vivek Verma', 'Practice'],
+      ['11:15 - 12:15', 'Competitive Coding Club', 'Lab 1', 'Student Chapter', 'Club Activity'],
+      ['01:00 - 02:00', 'Guest Lecture: Cloud Systems', 'Auditorium', 'Industry Expert', 'Seminar']
+    ]
+  };
+
+  const facultySchedule = {
+    'Monday': [
+      ['09:00 - 10:00', 'Data Structures · Sec A', 'Room 302', '62 Students', 'Lecture'],
+      ['11:15 - 12:15', 'Advanced Algorithms · Sec C', 'Room 108', '48 Students', 'Lecture'],
+      ['02:00 - 04:00', 'DSA Programming Lab', 'Lab 4', '30 Students', 'Lab Supervision']
+    ],
+    'Tuesday': [
+      ['10:00 - 11:00', 'Department Faculty Meeting', 'Conference Room', 'HOD & Staff', 'Departmental'],
+      ['02:00 - 03:00', 'Mentor Mentee Session', 'Faculty Chamber', 'Batch 2026', 'Mentorship']
+    ],
+    'Wednesday': [
+      ['10:00 - 11:00', 'Data Structures · Sec A', 'Room 302', '62 Students', 'Lecture'],
+      ['01:00 - 02:00', 'Curriculum Review Session', 'Dean Chamber', 'Academic Board', 'Committee']
+    ],
+    'Thursday': [
+      ['11:15 - 12:15', 'Advanced Algorithms · Sec C', 'Room 108', '48 Students', 'Lecture'],
+      ['02:00 - 04:00', 'Project Review Evaluation', 'Lab 3', 'Final Year Teams', 'Evaluation']
+    ],
+    'Friday': [
+      ['10:00 - 11:00', 'Data Structures · Sec B', 'Room 302', '58 Students', 'Lecture'],
+      ['02:00 - 03:30', 'Research & Paper Writing', 'Faculty Lab', 'Scholars', 'Research']
+    ]
+  };
+
+  const activeSchedule = isFaculty ? facultySchedule : studentSchedule;
+  const currentSlots = activeSchedule[state.timetableActiveDay] || [];
+
+  return `
+    ${hero(
+      isFaculty ? 'Faculty Teaching Schedule' : 'Academic Class Timetable',
+      isFaculty ? 'Manage lectures, lab supervision hours, and departmental academic meetings.' : 'View weekly schedules, lecture room allocations, and practical lab slots.'
+    )}
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+      <div class="filter-tabs" style="margin:0">
+        ${days.map(d => `
+          <button class="filter-tab ${state.timetableActiveDay === d ? 'active' : ''}" onclick="setTimetableDay('${d}')">${d}</button>
+        `).join('')}
+      </div>
+      <button class="action" onclick="showToast('Timetable exported as calendar invite (.ics)')">
+        <span>📅 Export Schedule</span>
+      </button>
+    </div>
+
+    ${panel(`${state.timetableActiveDay} Schedule (${currentSlots.length} sessions)`, `
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Time Slot</th>
+              <th>Course / Subject</th>
+              <th>Venue / Room</th>
+              <th>${isFaculty ? 'Enrolled Strength' : 'Faculty In-Charge'}</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${currentSlots.map((s, idx) => `
+              <tr>
+                <td><b>${s[0]}</b></td>
+                <td><b style="color:var(--ink)">${s[1]}</b></td>
+                <td><span style="background:#f0efff;color:#6257e9;padding:3px 8px;border-radius:8px;font-size:11px;font-weight:700">${s[2]}</span></td>
+                <td>${s[3]}</td>
+                <td><span class="status info">${s[4]}</span></td>
+                <td><span class="status ${idx === 0 ? '' : 'pending'}">${idx === 0 ? 'Upcoming Next' : 'Scheduled'}</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `, 'Semester 4')}
+  `;
+}
+
+function setTimetableDay(day) {
+  state.timetableActiveDay = day;
+  render('Timetable');
+}
+
+/* Page: Attendance */
+function pageAttendance() {
+  const isFaculty = state.currentRole === 'Teacher / Faculty';
+  const isParent = state.currentRole === 'Parent';
+
+  if (isFaculty) {
+    return `
+      ${hero('Class Attendance Management', 'Record and verify daily lecture and laboratory attendance for assigned batches.')}
+      ${panel('Quick Attendance Marker (Data Structures · Sec A)', `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div><b>Today:</b> 02 Nov 2026 · <b>Class:</b> 09:00 - 10:00 AM (DSA)</div>
+          <button class="action" onclick="toggleAllAttendance(true)">Mark All Present</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Roll No</th>
+                <th>Student Name</th>
+                <th>Overall Attendance</th>
+                <th>Today’s Presence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>24CS082</td>
+                <td><b>Aryan Sharma</b></td>
+                <td>92.4% (Good)</td>
+                <td><span class="status">Present ✓</span></td>
+              </tr>
+              <tr>
+                <td>24CS083</td>
+                <td><b>Bhavna Patel</b></td>
+                <td>88.0% (Good)</td>
+                <td><span class="status">Present ✓</span></td>
+              </tr>
+              <tr>
+                <td>24CS084</td>
+                <td><b>Chirag Saxena</b></td>
+                <td>73.5% (Warning)</td>
+                <td><span class="status pending">Late (Approved)</span></td>
+              </tr>
+              <tr>
+                <td>24CS085</td>
+                <td><b>Deepak Kumar</b></td>
+                <td>94.1% (Good)</td>
+                <td><span class="status">Present ✓</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:16px;text-align:right">
+          <button class="primary" onclick="showToast('Class attendance locked and uploaded to registrar!')">Submit &amp; Lock Attendance</button>
+        </div>
+      `, 'Section A')}
+    `;
+  }
+
+  const subjects = [
+    { name: 'Data Structures & Algorithms', attended: 28, total: 30, pct: 93.3, status: 'Good' },
+    { name: 'Discrete Mathematics', attended: 24, total: 30, pct: 80.0, status: 'Warning' },
+    { name: 'Database Management Systems', attended: 27, total: 29, pct: 93.1, status: 'Good' },
+    { name: 'Web Technology', attended: 26, total: 28, pct: 92.8, status: 'Good' },
+    { name: 'Operating Systems', attended: 27, total: 29, pct: 93.1, status: 'Good' }
+  ];
+
+  return `
+    ${hero(
+      isParent ? 'Aryan’s Attendance Progress' : 'Attendance Analytics',
+      isParent ? 'Verified real-time attendance report for Aryan Sharma (B.Tech CSE - 4th Semester).' : 'Track your academic attendance records, minimum 75% thresholds, and safe bunk margins.'
+    )}
+
+    <div class="stats" style="grid-template-columns:repeat(3, 1fr)">
+      <div class="stat">
+        <div class="stat-top"><span>Overall Term Average</span><span class="stat-icon">◷</span></div>
+        <strong>92.4%</strong>
+        <small>Target: 75% minimum requirement</small>
+      </div>
+      <div class="stat">
+        <div class="stat-top"><span>Safe Bunk Calculator</span><span class="stat-icon">🛡️</span></div>
+        <strong style="color:#635bfa">05 classes</strong>
+        <small>You can miss up to 5 classes safely</small>
+      </div>
+      <div class="stat">
+        <div class="stat-top"><span>Lowest Attendance</span><span class="stat-icon">⚠️</span></div>
+        <strong style="color:var(--warning)">80.0%</strong>
+        <small style="color:var(--warning)">Discrete Mathematics (Watch)</small>
+      </div>
+    </div>
+
+    ${panel('Subject-wise Attendance Breakdown', `
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Classes Attended</th>
+              <th>Total Held</th>
+              <th>Percentage</th>
+              <th>Visual Indicator</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${subjects.map(s => `
+              <tr>
+                <td><b>${s.name}</b></td>
+                <td>${s.attended}</td>
+                <td>${s.total}</td>
+                <td><b>${s.pct}%</b></td>
+                <td style="width:160px">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width:${s.pct}%"></div>
+                  </div>
+                </td>
+                <td>
+                  <span class="status ${s.status === 'Good' ? '' : 'pending'}">${s.status}</span>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `, 'Current Semester')}
+  `;
+}
+
+function toggleAllAttendance(status) {
+  showToast('Marked all students as present for current lecture.');
+}
+
+/* Page: Assignments & Results */
+function pageAssignments() {
+  const isFaculty = state.currentRole === 'Teacher / Faculty';
+  const isParent = state.currentRole === 'Parent';
+
+  const filterTabs = ['All', 'Pending', 'Submitted', 'In Progress'];
+
+  return `
+    ${hero(
+      isFaculty ? 'Coursework & Grading Desk' : isParent ? 'Academic Progress & Exam Grades' : 'Assignments & Examination Results',
+      isFaculty ? 'Review student submissions, publish project marks, and assign feedback.' : 'Keep track of coursework, project deadlines, and official semester test scores.'
+    )}
+
+    ${panel('Continuous Assessment Tests (CT-1 Results)', `
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Assessment</th>
+              <th>Course Subject</th>
+              <th>Score Obtained</th>
+              <th>Maximum Marks</th>
+              <th>Grade Point</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>CT-1 Examination</b></td>
+              <td>Data Structures & Algorithms</td>
+              <td><b>28.5</b></td>
+              <td>30</td>
+              <td><span class="status">O (Outstanding)</span></td>
+              <td>Excellent algorithmic analysis</td>
+            </tr>
+            <tr>
+              <td><b>CT-1 Examination</b></td>
+              <td>Database Management Systems</td>
+              <td><b>26.0</b></td>
+              <td>30</td>
+              <td><span class="status">A+ (Superior)</span></td>
+              <td>Clean SQL subqueries</td>
+            </tr>
+            <tr>
+              <td><b>CT-1 Examination</b></td>
+              <td>Discrete Mathematics</td>
+              <td><b>24.0</b></td>
+              <td>30</td>
+              <td><span class="status">A (Very Good)</span></td>
+              <td>Good graph proofs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `, 'Term Grade: 8.6 CGPA')}
+
+    <div style="margin-top:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+        <div class="filter-tabs" style="margin:0">
+          ${filterTabs.map(t => `
+            <button class="filter-tab ${state.assignmentsFilter === t ? 'active' : ''}" onclick="setAssignmentsFilter('${t}')">${t}</button>
+          `).join('')}
+        </div>
+        ${!isFaculty && !isParent ? `<button class="primary" style="padding:8px 16px;font-size:12.5px" onclick="openSubmitModal()">+ Submit Assignment</button>` : ''}
+      </div>
+
+      ${panel('Active Assignments & Projects', renderAssignmentsList(), 'Deadlines')}
+    </div>
+  `;
+}
+
+function setAssignmentsFilter(f) {
+  state.assignmentsFilter = f;
+  render('Assignments & Results');
+}
+
+function renderAssignmentsList() {
+  let list = state.assignments;
+  if (state.assignmentsFilter !== 'All') {
+    list = list.filter(a => a.status === state.assignmentsFilter);
+  }
+  if (!list.length) return `<div class="empty">No assignments found for this filter.</div>`;
+
+  return `
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Assignment Title</th>
+            <th>Due Date</th>
+            <th>Weightage</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${list.map(a => `
+            <tr>
+              <td><b>${a.subject}</b></td>
+              <td>${a.title}</td>
+              <td><span style="color:${a.status === 'Pending' ? 'var(--warning)' : 'inherit'}">${a.due}</span></td>
+              <td>${a.marks}</td>
+              <td><span class="status ${a.status === 'Submitted' ? '' : a.status === 'Pending' ? 'pending' : 'info'}">${a.status}</span></td>
+              <td>
+                <button class="${a.status === 'Pending' ? 'primary' : 'action'}" style="padding:5px 11px;font-size:11px" onclick="handleAssignmentAction(${a.id})">
+                  ${a.status === 'Pending' ? 'Submit' : 'View'}
+                </button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function handleAssignmentAction(id) {
+  const a = state.assignments.find(x => x.id === id);
+  if (!a) return;
+  if (a.status === 'Pending') {
+    openSubmitModal(a);
+  } else {
+    openModal(`
+      <div class="modal-head">
+        <h3>${a.title}</h3>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <p><b>Subject:</b> ${a.subject}</p>
+      <p><b>Status:</b> ${a.status}</p>
+      <p><b>Uploaded file:</b> <code>assignment_${a.id}_final.zip</code> (2.4 MB)</p>
+      <p class="muted">Your submission was verified by the course portal timestamp server.</p>
+      <div style="text-align:right;margin-top:16px">
+        <button class="primary" onclick="closeModal()">Close</button>
+      </div>
+    `);
+  }
+}
+
+function openSubmitModal(item) {
+  const title = item ? item.title : 'Coursework Submission';
+  openModal(`
+    <div class="modal-head">
+      <h3>Submit: ${title}</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <form onsubmit="submitAssignmentFile(event, ${item ? item.id : 1})">
+      <div class="field">
+        <label>Upload Solution File (PDF / ZIP / Code)</label>
+        <input type="file" id="assignFile" required>
+      </div>
+      <div class="field">
+        <label>Submission Comments / Notes</label>
+        <textarea rows="3" placeholder="Optional notes for faculty reviewer..."></textarea>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+        <button type="button" class="action" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="primary">Confirm Submission</button>
+      </div>
+    </form>
+  `);
+}
+
+function submitAssignmentFile(e, id) {
+  e.preventDefault();
+  const a = state.assignments.find(x => x.id === id);
+  if (a) {
+    a.status = 'Submitted';
+  }
+  closeModal();
+  showToast('Assignment submitted successfully!');
+  render('Assignments & Results');
+}
+
+/* Page: Events */
+function pageEvents() {
+  const categories = ['All', 'Tech', 'Placements', 'Sports', 'Cultural'];
+  const canCreate = state.currentRole === 'College Administration' || state.currentRole === 'Placement Cell';
+
+  return `
+    ${hero('Campus Events & Hackathons', 'Discover university festivals, technical symposiums, sports meets, and guest masterclasses.')}
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+      <div class="filter-tabs" style="margin:0">
+        ${categories.map(c => `
+          <button class="filter-tab ${state.eventsFilter === c ? 'active' : ''}" onclick="setEventsFilter('${c}')">${c}</button>
+        `).join('')}
+      </div>
+      ${canCreate ? `<button class="primary" style="padding:8px 16px;font-size:12.5px" onclick="openCreateEventModal()">+ Add campus event</button>` : ''}
+    </div>
+
+    ${panel(`Scheduled Events (${state.events.length})`, eventList(10), 'Campus Calendar 2026')}
+  `;
+}
+
+function setEventsFilter(c) {
+  state.eventsFilter = c;
+  render('Events');
+}
+
+function openCreateEventModal() {
+  openModal(`
+    <div class="modal-head">
+      <h3>Create Campus Event</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <form onsubmit="submitNewEvent(event)">
+      <div class="field">
+        <label>Event Name</label>
+        <input id="newEventTitle" required placeholder="e.g. AI Robotics Workshop">
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select id="newEventCategory">
+          <option>Tech</option>
+          <option>Placements</option>
+          <option>Sports</option>
+          <option>Cultural</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Date &amp; Venue</label>
+        <input id="newEventLoc" required placeholder="e.g. Main Auditorium · 10:00 AM">
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+        <button type="button" class="action" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="primary">Publish Event</button>
+      </div>
+    </form>
+  `);
+}
+
+function submitNewEvent(e) {
+  e.preventDefault();
+  const title = $('newEventTitle').value.trim();
+  const category = $('newEventCategory').value;
+  const loc = $('newEventLoc').value.trim();
+  if (!title) return;
+
+  state.events.push({
+    id: Date.now(),
+    day: '05',
+    month: 'DEC',
+    title,
+    loc,
+    category,
+    registered: false
+  });
+
+  closeModal();
+  showToast('Event published to college calendar!');
+  render('Events');
+}
+
+/* Page: Placements */
+function pagePlacements() {
+  const isCell = state.currentRole === 'Placement Cell';
+
+  return `
+    ${hero('Career & Placement Opportunities', 'Discover industry internship openings and full-time engineering roles matched to your skillset.', 'AI RECRUITMENT')}
+
+    <div class="grid2">
+      ${panel('Recommended Positions', renderPlacementCards(), 'AI Matching Engine')}
+      ${panel('AI Placement Assistant', `
+        <div class="field">
+          <label>Your Technical Skills (Comma separated)</label>
+          <input id="skillsInput" value="React, JavaScript, Python, SQL" placeholder="e.g. Python, React, SQL, Java">
+        </div>
+        <div class="field">
+          <label>Target Specialization</label>
+          <select id="interestInput">
+            <option>Software Development</option>
+            <option>Data Analytics &amp; AI</option>
+            <option>Fullstack Web Engineering</option>
+            <option>UI / UX Product Design</option>
+          </select>
+        </div>
+        <button class="primary" style="width:100%" onclick="runAIRecommendation()">
+          <span>✦ Analyze &amp; Re-match Opportunities</span>
+        </button>
+        <div id="aiMatchSummary" style="background:#f6f8fe;border-radius:12px;padding:12px;margin-top:14px;font-size:12px;color:var(--muted)">
+          <b style="color:var(--ink)">AI Insights:</b> 4 high-match positions found for your tech profile. Skills like <b>React</b> and <b>Python</b> are currently top in demand.
+        </div>
+      `, 'AI Assistant')}
+    </div>
+
+    ${isCell ? `
+      <div style="margin-top:20px">
+        ${panel('Placement Drive Management Panel', `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <p class="muted" style="margin:0;font-size:13px">Post and organize company recruitment drives, eligibility rules, and interview rounds.</p>
+            <button class="primary" style="padding:8px 16px;font-size:12px" onclick="openCreateDriveModal()">+ Schedule New Drive</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Company</th>
+                  <th>Role</th>
+                  <th>Eligibility Criteria</th>
+                  <th>CTC Package</th>
+                  <th>Registered</th>
+                  <th>Drive Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Nexus Technologies</b></td>
+                  <td>Frontend Engineer</td>
+                  <td>CSE/IT · >= 7.5 CGPA</td>
+                  <td>₹8.5 LPA</td>
+                  <td>142 students</td>
+                  <td>15 Nov 2026</td>
+                </tr>
+                <tr>
+                  <td><b>DataSphere AI</b></td>
+                  <td>Python ML Intern</td>
+                  <td>All Branches · >= 8.0 CGPA</td>
+                  <td>₹12.0 LPA</td>
+                  <td>98 students</td>
+                  <td>20 Nov 2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `, 'Drive Coordinator')}
+      </div>
+    ` : ''}
+  `;
+}
+
+function renderPlacementCards() {
+  return `
+    <div style="display:grid;gap:12px">
+      ${state.placementOpportunities.map(p => `
+        <div style="background:#ffffff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 2px 8px #00000006">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <b style="font-size:14px;color:var(--ink)">${p.role}</b>
+              <div style="font-size:12px;color:var(--muted);margin-top:2px">${p.company} · <span style="color:#5e52e8;font-weight:700">${p.stipend}</span></div>
+            </div>
+            <span class="status info" style="font-weight:800">${p.match}% Match</span>
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin:12px 0">
+            ${p.skills.map(s => `
+              <span style="font-size:10.5px;background:#f0efff;color:#635bfa;padding:3px 8px;border-radius:8px;font-weight:700">${s}</span>
+            `).join('')}
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;gap:8px">
+            <button class="${p.applied ? 'action' : 'primary'}" style="padding:6px 14px;font-size:12px" onclick="applyPlacement(${p.id})">
+              ${p.applied ? 'Applied ✓' : 'Express Interest / Apply'}
+            </button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function runAIRecommendation() {
+  const s = $('skillsInput').value.trim();
+  const interest = $('interestInput').value;
+  if (!s) return showToast('Please enter your skills first.');
+
+  $('aiMatchSummary').innerHTML = `
+    <b style="color:var(--ink)">AI Matching Complete:</b> Re-evaluated opportunities against <i>${s}</i> for <b>${interest}</b>.
+    Ranked top match: <b>Nexus Technologies (98% affinity)</b>.
+  `;
+  showToast('AI recommendations refreshed for your skills!');
+}
+
+function applyPlacement(id) {
+  const p = state.placementOpportunities.find(x => x.id === id);
+  if (!p) return;
+  p.applied = !p.applied;
+  showToast(p.applied ? `Application submitted for ${p.role} at ${p.company}!` : `Withdrew application for ${p.role}.`);
+  render('Placements');
+}
+
+function openCreateDriveModal() {
+  openModal(`
+    <div class="modal-head">
+      <h3>Schedule Company Placement Drive</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <form onsubmit="submitDrive(event)">
+      <div class="field">
+        <label>Company Name</label>
+        <input id="driveCompany" required placeholder="e.g. Google India">
+      </div>
+      <div class="field">
+        <label>Job Profile / Role</label>
+        <input id="driveRole" required placeholder="e.g. Software Development Engineer">
+      </div>
+      <div class="field">
+        <label>Annual CTC Package</label>
+        <input id="drivePackage" required placeholder="e.g. ₹18 LPA">
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px">
+        <button type="button" class="action" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="primary">Publish Drive</button>
+      </div>
+    </form>
+  `);
+}
+
+function submitDrive(e) {
+  e.preventDefault();
+  closeModal();
+  showToast('Company recruitment drive created and announced!');
+  render('Placements');
+}
+
+/* Page: Community Forum */
+function pageCommunity() {
+  return `
+    ${hero('Campus Community & Discussion Forum', 'Collaborate with peers, ask questions, organize study groups, and connect with faculty.')}
+
+    <div class="grid2">
+      <div>
+        ${panel('Start a Discussion', `
+          <div class="field" style="margin-top:0">
+            <textarea id="postText" rows="3" placeholder="Share an idea, ask an academic question, or post a campus update..."></textarea>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;gap:6px">
+              <span class="status info" style="cursor:pointer" onclick="$('postText').value += ' #Academics'">#Academics</span>
+              <span class="status info" style="cursor:pointer" onclick="$('postText').value += ' #Events'">#Events</span>
+              <span class="status info" style="cursor:pointer" onclick="$('postText').value += ' #Placement'">#Placement</span>
+            </div>
+            <button class="primary" style="padding:9px 18px;font-size:12.5px" onclick="addPost()">Post to Forum</button>
+          </div>
+        `, 'Community')}
+
+        <div style="margin-top:16px">
+          ${panel(`Live Feed (${state.communityPosts.length} discussions)`, renderCommunityPosts(), 'Recent Posts')}
+        </div>
+      </div>
+
+      <div>
+        ${panel('Community Guidelines', `
+          <div style="font-size:12.5px;color:var(--muted);line-height:1.6">
+            <p>✦ Keep discussions respectful, inclusive, and academically focused.</p>
+            <p>✦ Avoid posting copyrighted examination materials or unverified circulars.</p>
+            <p>✦ For formal support requests, use the <b>Complaints</b> tab.</p>
+          </div>
+        `, 'Code of Conduct')}
+
+        <div style="margin-top:16px">
+          ${panel('Popular Campus Channels', `
+            <div style="display:grid;gap:8px">
+              <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fbfbff;border-radius:10px;font-size:12px">
+                <b>#ComputerScience</b>
+                <span class="status info">340 members</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fbfbff;border-radius:10px;font-size:12px">
+                <b>#PlacementPreparation</b>
+                <span class="status info">512 members</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 10px;background:#fbfbff;border-radius:10px;font-size:12px">
+                <b>#SportsAndClubs</b>
+                <span class="status info">218 members</span>
+              </div>
+            </div>
+          `, 'Channels')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCommunityPosts() {
+  if (!state.communityPosts.length) return `<div class="empty">No discussions yet. Be the first to start one!</div>`;
+
+  return `
+    <div style="display:grid;gap:14px">
+      ${state.communityPosts.map(p => `
+        <div style="background:#ffffff;border:1px solid var(--line);border-radius:16px;padding:16px">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div class="avatar" style="width:36px;height:36px;font-size:13px">${p.author[0]}</div>
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <b>${p.author}</b>
+                <time style="font-size:11px;color:#9aa1b6">${p.time}</time>
+              </div>
+              <small style="color:var(--muted);font-size:11px">${p.role}</small>
+              <p style="font-size:13px;color:var(--ink);margin:8px 0;line-height:1.5">${p.content}</p>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+                <span class="status info" style="font-size:10.5px">${p.tag}</span>
+                <div style="display:flex;gap:10px">
+                  <button class="${p.hasLiked ? 'primary' : 'action'}" style="padding:4px 10px;font-size:11px" onclick="togglePostLike(${p.id})">
+                    ♥ ${p.likes}
+                  </button>
+                  <button class="action" style="padding:4px 10px;font-size:11px" onclick="openCommentModal(${p.id})">
+                    💬 ${p.replies} Replies
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function addPost() {
+  const t = $('postText').value.trim();
+  if (!t) return showToast('Please enter text before posting.');
+
+  const info = roleDetails[state.currentRole] || { name: state.currentRole, title: state.currentRole };
+  const newPost = {
+    id: Date.now(),
+    author: info.name,
+    role: info.title,
+    time: 'Just now',
+    content: t.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+    tag: t.includes('#') ? t.match(/#\w+/)[0] : '#General',
+    likes: 0,
+    hasLiked: false,
+    replies: 0
+  };
+
+  state.communityPosts.unshift(newPost);
+  $('postText').value = '';
+  showToast('Discussion published to campus community!');
+  render('Community');
+}
+
+function togglePostLike(id) {
+  const p = state.communityPosts.find(x => x.id === id);
+  if (!p) return;
+  p.hasLiked = !p.hasLiked;
+  p.likes += p.hasLiked ? 1 : -1;
+  render('Community');
+}
+
+function openCommentModal(id) {
+  const p = state.communityPosts.find(x => x.id === id);
+  if (!p) return;
+  openModal(`
+    <div class="modal-head">
+      <h3>Replies to ${p.author}</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div style="background:#f8f9fe;border-radius:12px;padding:12px;margin-bottom:14px;font-size:13px">
+      ${p.content}
+    </div>
+    <div style="font-size:12px;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line)">
+      <b>Prof. R. Mehta:</b> You can check the course repository for sample tests.
+    </div>
+    <div class="field" style="margin-top:14px">
+      <input id="replyInput" placeholder="Write a response...">
+    </div>
+    <div style="text-align:right">
+      <button class="primary" onclick="submitReply(${p.id})">Send reply</button>
+    </div>
+  `);
+}
+
+function submitReply(id) {
+  const p = state.communityPosts.find(x => x.id === id);
+  if (p) p.replies++;
+  closeModal();
+  showToast('Reply added to discussion!');
+  render('Community');
+}
+
+/* Page: Fees */
+function pageFees() {
+  const isAdmin = state.currentRole === 'College Administration';
+
+  if (isAdmin) {
+    return `
+      ${hero('Campus Fee Accounts & Collections', 'Administrative institutional fee statistics, department collections, and pending accounts.')}
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-top"><span>Total Expected</span><span class="stat-icon">₹</span></div>
+          <strong>₹5.25 Cr</strong>
+          <small>Academic Year 2026</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top"><span>Total Collected</span><span class="stat-icon">📈</span></div>
+          <strong style="color:var(--success)">₹4.82 Cr</strong>
+          <small>91.8% Collection Rate</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top"><span>Outstanding Dues</span><span class="stat-icon">⚠️</span></div>
+          <strong style="color:var(--warning)">₹43.2 Lakh</strong>
+          <small>Across 128 students</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top"><span>Audit Status</span><span class="stat-icon">✓</span></div>
+          <strong>Verified</strong>
+          <small>Q3 Financial Audit</small>
+        </div>
+      </div>
+
+      ${panel('Department Fee Collection Summary', `
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Total Enrolled</th>
+                <th>Collected Amount</th>
+                <th>Collection Rate</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Computer Science &amp; Engineering</b></td>
+                <td>420</td>
+                <td>₹1.76 Cr</td>
+                <td><span class="status">94.2%</span></td>
+                <td><button class="action" onclick="showToast('Reminder sent to pending CSE students')">Send Reminder</button></td>
+              </tr>
+              <tr>
+                <td><b>Electronics &amp; Communication</b></td>
+                <td>310</td>
+                <td>₹1.28 Cr</td>
+                <td><span class="status">90.5%</span></td>
+                <td><button class="action" onclick="showToast('Reminder sent to pending ECE students')">Send Reminder</button></td>
+              </tr>
+              <tr>
+                <td><b>Information Technology</b></td>
+                <td>280</td>
+                <td>₹1.15 Cr</td>
+                <td><span class="status">92.0%</span></td>
+                <td><button class="action" onclick="showToast('Reminder sent to pending IT students')">Send Reminder</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `, 'Registrar View')}
+    `;
+  }
+
+  return `
+    ${hero('Semester Fee Portal', 'Review fee invoices, payment receipts, and complete semester fee transactions securely.')}
+
+    <div class="grid2">
+      ${panel('Current Semester Fee (Term 4)', `
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Tuition &amp; Academic Fee</b></td>
+                <td>₹42,000</td>
+                <td><span class="status">Paid ✓</span></td>
+              </tr>
+              <tr>
+                <td><b>Central Library &amp; Journal Fund</b></td>
+                <td>₹1,000</td>
+                <td><span class="status">Paid ✓</span></td>
+              </tr>
+              <tr>
+                <td><b>Practical Lab &amp; Computing Access</b></td>
+                <td>₹3,500</td>
+                <td><span class="status">Paid ✓</span></td>
+              </tr>
+              <tr>
+                <td><b>Mid-Semester Examination Fee</b></td>
+                <td>₹1,500</td>
+                <td><span class="status pending">Pending Due</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="background:#f8f9fe;border-radius:14px;padding:16px;margin-top:16px;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:12px;color:var(--muted)">Pending Payable:</div>
+            <strong style="font-size:22px;color:var(--ink)">₹1,500</strong>
+          </div>
+          <button class="primary" onclick="openPaymentModal()">Pay Remaining Fee Online</button>
+        </div>
+      `, 'Invoice #CC-INV-4029')}
+
+      ${panel('Payment History & Receipts', `
+        <div style="display:grid;gap:10px">
+          <div style="background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <b style="font-size:13px">Term 3 Fee Clearance</b>
+              <div style="font-size:11px;color:var(--muted)">Paid ₹46,500 · 14 Jul 2026</div>
+            </div>
+            <button class="action" onclick="showToast('Receipt REC-2026-302 downloaded as PDF')">Receipt PDF</button>
+          </div>
+          <div style="background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <b style="font-size:13px">Term 2 Fee Clearance</b>
+              <div style="font-size:11px;color:var(--muted)">Paid ₹45,000 · 10 Jan 2026</div>
+            </div>
+            <button class="action" onclick="showToast('Receipt REC-2026-201 downloaded as PDF')">Receipt PDF</button>
+          </div>
+        </div>
+      `, 'History')}
+    </div>
+  `;
+}
+
+function openPaymentModal() {
+  openModal(`
+    <div class="modal-head">
+      <h3>Pay College Examination Fee</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div style="background:#f0efff;border-radius:12px;padding:14px;margin-bottom:16px">
+      <div style="font-size:12px;color:var(--purple-dark);font-weight:700">Total Payable Amount:</div>
+      <div style="font-size:24px;font-weight:900;color:var(--ink);margin-top:4px">₹1,500.00</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">Convenience charges: ₹0 (Campus Subsidized)</div>
+    </div>
+    <div class="field">
+      <label>Select Payment Method</label>
+      <select id="payMethod">
+        <option>UPI (Google Pay / PhonePe / Paytm)</option>
+        <option>Net Banking (All Major Indian Banks)</option>
+        <option>Credit / Debit Card</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>UPI ID or Account Number</label>
+      <input placeholder="e.g. aryan@okaxis" value="student@okhdfcbank">
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+      <button type="button" class="action" onclick="closeModal()">Cancel</button>
+      <button type="button" class="primary" onclick="confirmPayment()">Authorize &amp; Pay ₹1,500</button>
+    </div>
+  `);
+}
+
+function confirmPayment() {
+  closeModal();
+  showToast('Payment successful! Reference ID: CC-TXN-8942');
+}
+
+/* Page: Complaints & Grievance Desk */
+function pageComplaints() {
+  const isAdmin = state.currentRole === 'College Administration';
+
+  return `
+    ${hero('Campus Helpdesk & Grievance Redressal', 'Submit infrastructure, academic, or IT maintenance issues for swift resolution by college staff.')}
+
+    <div class="grid2">
+      ${panel('Submit a Concern / Request', `
+        <form onsubmit="submitComplaintForm(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field">
+              <label>Category</label>
+              <select id="compCategory">
+                <option>Infrastructure</option>
+                <option>Academic</option>
+                <option>IT &amp; Wi-Fi Support</option>
+                <option>Hostel &amp; Mess</option>
+                <option>Fees &amp; Accounts</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Urgency Level</label>
+              <select id="compPriority">
+                <option>Normal</option>
+                <option>High</option>
+                <option>Urgent</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Subject</label>
+            <input id="compSubject" required placeholder="Brief description of the issue">
+          </div>
+          <div class="field">
+            <label>Detailed Explanation</label>
+            <textarea id="compDesc" rows="4" required placeholder="Describe location, timing, and problem..."></textarea>
+          </div>
+          <button class="primary" style="width:100%">Submit Support Request</button>
+        </form>
+      `, 'New Ticket')}
+
+      ${panel(`${isAdmin ? 'Active Campus Grievance Queue' : 'My Support Tickets'} (${state.complaints.length})`, renderComplaintsList(isAdmin), 'Helpdesk Status')}
+    </div>
+  `;
+}
+
+function renderComplaintsList(isAdmin) {
+  if (!state.complaints.length) return `<div class="empty">No tickets logged.</div>`;
+
+  return `
+    <div style="display:grid;gap:12px">
+      ${state.complaints.map(c => `
+        <div style="background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:14px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <span style="font-size:11px;font-family:monospace;color:#635bfa;font-weight:700">${c.id}</span>
+              <b style="display:block;font-size:13px;color:var(--ink);margin-top:2px">${c.subject}</b>
+            </div>
+            <span class="status ${c.status === 'Resolved' ? '' : 'pending'}">${c.status}</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin:6px 0;line-height:1.4">${c.desc}</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:#9aa1b6">
+            <span>${c.category} · Priority: <b style="color:var(--ink)">${c.priority}</b></span>
+            <span>${c.date}</span>
+          </div>
+          ${isAdmin && c.status !== 'Resolved' ? `
+            <div style="margin-top:10px;text-align:right">
+              <button class="action" style="font-size:11px;padding:4px 10px" onclick="resolveTicket('${c.id}')">Mark as Resolved ✓</button>
+            </div>
+          ` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function submitComplaintForm(e) {
+  e.preventDefault();
+  const category = $('compCategory').value;
+  const priority = $('compPriority').value;
+  const subject = $('compSubject').value.trim();
+  const desc = $('compDesc').value.trim();
+  if (!subject || !desc) return;
+
+  const newTicket = {
+    id: `CC-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+    category,
+    priority,
+    subject,
+    desc,
+    status: 'In Progress',
+    date: 'Today · Just now'
+  };
+
+  state.complaints.unshift(newTicket);
+  showToast(`Request filed! Reference: ${newTicket.id}`);
+  render('Complaints');
+}
+
+function resolveTicket(id) {
+  const c = state.complaints.find(x => x.id === id);
+  if (c) c.status = 'Resolved';
+  showToast(`Ticket ${id} marked as resolved!`);
+  render('Complaints');
+}
+
+/* Page Dispatcher */
+function pageContent(page) {
+  if (page === 'Notices') return pageNotices();
+  if (page === 'Timetable') return pageTimetable();
+  if (page === 'Attendance') return pageAttendance();
+  if (page === 'Assignments & Results') return pageAssignments();
+  if (page === 'Events') return pageEvents();
+  if (page === 'Placements') return pagePlacements();
+  if (page === 'Community') return pageCommunity();
+  if (page === 'Fees') return pageFees();
+  if (page === 'Complaints') return pageComplaints();
+  return overview();
+}
+
+function render(page) {
+  state.currentPage = page;
+  buildNav();
+  if ($('sidebar').classList.contains('open')) toggleMenu();
+
+  const subs = {
+    'Overview': 'Here’s what’s happening on your campus today.',
+    'Notices': 'Official circulars, academic notices, and examination updates.',
+    'Timetable': 'Your personalized academic and teaching schedule.',
+    'Attendance': 'Attendance logs, statistics, and 75% threshold margins.',
+    'Assignments & Results': 'Coursework submissions and continuous assessment grades.',
+    'Events': 'University symposiums, festivals, and student club activities.',
+    'Placements': 'Career opportunities and AI-powered skill matches.',
+    'Community': 'Collaborate with your campus peers and faculty.',
+    'Fees': 'Fee schedules, invoices, and online digital payment.',
+    'Complaints': 'Official campus grievance desk and support tickets.'
+  };
+
+  const title = page === 'Overview' ? `${getGreeting()}` : page;
+  setHead(title, subs[page] || 'Your campus workspace.');
+  $('view').innerHTML = page === 'Overview' ? overview() : pageContent(page);
+  renderNotifications();
+}
+</script>
+</body>
+</html>
